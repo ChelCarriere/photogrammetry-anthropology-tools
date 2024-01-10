@@ -1,3 +1,5 @@
+xy = (FILE NAME)
+
 fitSS <- function(xy,
                   a0=mean(xy[,1]),
                   b0=mean(xy[,2]),
@@ -17,8 +19,6 @@ circlexy <- function(xyr, n=180){
           )
 }
 
-
-xy = (FILE NAME)
 
 f=fitSS(xy)
 
