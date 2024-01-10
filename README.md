@@ -2,8 +2,6 @@
 
 This is the accompanying tools created and used for _BU Master's Thesis_ and referenced in article _[Assessing the utility of 3D modeling with photogrammetry in assigned sex estimation from the greater sciatic notch](https://www.sciencedirect.com/science/article/abs/pii/S2666225623000453)_
 
-## Assessing the utility of 3D modeling with photogrammetry in assigned sex estimation from the greater sciatic notch
-
 ## Install
 Download the [Batch-run comand](batch-run.cmd), [Samples to Run](samples-to-run.txt), and [Blender Curve Export Addon](export-curve-to-csv-addon.py). The batch-run comand and samples to run files must be in the same directories along with the directories containing the photosets you wich to process.
 
