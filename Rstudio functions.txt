@@ -1,0 +1,32 @@
+fitSS <- function(xy,
+                  a0=mean(xy[,1]),
+                  b0=mean(xy[,2]),
+                  r0 = mean(sqrt((xy[,1]-a0)^2 + (xy[,2]-b0)^2)),
+                  ...){
+    SS <- function(abr){
+        sum((abr[3] - sqrt((xy[,1]-abr[1])^2 + (xy[,2]-abr[2])^2))^2)
+    }
+    optim(c(a0,b0,r0), SS, ...)
+}
+
+
+circlexy <- function(xyr, n=180){
+    theta = seq(0,2*pi,len=n)
+    cbind(xyr[1] + xyr[3]*cos(theta),
+          xyr[2] + xyr[3]*sin(theta)
+          )
+}
+
+
+xy = (FILE NAME)
+
+f=fitSS(xy)
+
+plot(xy,asp=1,xlim=c(20,90),ylim=c(40,110))
+
+lines(circlexy(f$par))
+
+
+
+
+****The fit$par value is a vector of xcenter, ycenter, radius.

@@ -1,0 +1,110 @@
+# Import required packages
+#import pandas as pd
+import os
+import bpy, bmesh
+obj = bpy.context.active_object
+
+#Variables!!!
+path_output_csv = "D:/Thesis project/060421_BU31-R/blender/TestCsv.csv"
+
+
+# Turn on for debugging
+DEBUG = 1
+
+# Takes a list of strings and formats it down into a single string
+# Get the return value from this function then write to a csv file
+# DONT USE THIS FOR NOW, it might be broken, but its a start
+def list_to_csv(list_of_things):
+    output = ''
+    i = 0
+    list_len = len(list_of_things)
+    
+    for item in list_of_things:
+        i += 1
+        print(item)
+        if i<list_len:
+            output += "{0},".format(item)
+        
+        if i == list_len:
+            output += "{0} \n".format(item)
+            
+    return output
+
+
+# Get the Object via the blender API
+if obj.mode == 'EDIT':
+    # this works only in edit mode,
+    bm = bmesh.from_edit_mesh(obj.data)
+    verts = [vert.co for vert in bm.verts]
+
+else:
+    # this works only in object mode,
+    verts = [vert.co for vert in obj.data.vertices]
+
+# coordinates as tuples
+plain_verts = [vert.to_tuple() for vert in verts]
+
+
+#Open a file as the output, Open in "W"rite Mode
+output_file = open(path_output_csv, "w")
+
+
+list_output = [] # Make a list to hold each of the rows of data
+
+# For each of the vertices in the list of vertices 
+for vert in plain_verts:
+    # Get the X, Y, and Z values respectively
+    XCoord = str(vert[0])
+    YCoord = str(vert[1])
+    ZCoord = str(vert[2])
+    
+    if DEBUG == 1: # For debugging purposes
+        print(vert, end=",\n")
+        print("X Cordinate" + XCoord )
+        print("Y Cordinate" + YCoord )
+        print("Z Cordinate" + ZCoord )
+    
+    # Concatenate them into a single string in CSV format
+    line = XCoord + " ," +  YCoord + " ," + ZCoord  + "\n"
+    # Write each row of data to the output file
+    output_file.write(line)
+
+# This was not working writing everythig at once, so it writes each row above    
+# output_csv_format = list_to_csv(list_output)
+# output_file.write(output_csv_format)
+
+# Close the file when we are done
+# TODO: This doesnt seem to close properly
+output_file.close()
+
+
+
+
+
+
+########## CODE GRAVEYARD ############### 
+#import bpy
+#from bpy import context
+
+#obj = context.active_object
+#v = obj.data.vertices[0]
+
+#co_final = obj.matrix_world @ v.co
+
+## now we can view the location by applying it to an object
+#obj_empty = bpy.data.objects.new("Test", None)
+#context.collection.objects.link(obj_empty)
+#obj_empty.location = co_final
+
+#coords = [(obj.matrix_world @ v.co) for v in obj.data.vertices]
+
+#print(coords, end="\n")
+
+
+# Could not get the pandas package working
+#df_verts_test = pd.DataFrame(data=plain_verts)
+#df_verts_test.to_excel("D:/Thesis project/060421_BU31-R/blender/", "Vertex Test")
+
+
+#    line +=  "\n"
+#    list_output += line
